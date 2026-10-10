@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Valentin Thiers — Ingénieur industrialisation</title>
+<meta name="description" content="Valentin Thiers, ingénieur industrialisation : Karakuri Kaizen®, amélioration continue et interventions sur sites de production en Europe.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='%23C2410C'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app/profil.css">
+<link rel="stylesheet" href="app/retro/retro.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand mono" href="#/" id="brand"></a>
+    <nav class="nav" aria-label="Pages">
+      <button class="nav-menu" id="nav-menu" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
+      <div class="nav-links" id="nav-links"></div>
+      <a class="btn-2" href="atlas.html" aria-label="Atlas des sites">Atlas<span class="hide-sm">&nbsp;des sites</span> <span aria-hidden="true">→</span></a>
+    </nav>
+  </div>
+  <span class="prog" id="prog" aria-hidden="true"></span>
+</header>
+
+<!-- Chaque section est une page plein écran ; on passe de l'une à l'autre
+     à la molette, au clavier (← →), d'un glissement du doigt ou via le menu. -->
+<main class="stage" id="stage">
+
+  <!-- Accueil -->
+  <section class="page" id="accueil" aria-label="Accueil">
+    <div class="page-in">
+      <div class="hero wrap">
+        <div class="hero-text">
+          <div class="who">
+            <img class="photo" id="photo" alt="" hidden>
+            <div class="kicker mono"><span class="dot"></span><span id="fonction"></span></div>
+          </div>
+          <h1 id="nom"></h1>
+          <p class="lead" id="accroche"></p>
+          <div class="actions">
+            <a class="btn" href="atlas.html">Explorer l’atlas <span aria-hidden="true">→</span></a>
+            <a class="btn-2" href="#/contact" id="cta-contact">Me contacter</a>
+          </div>
+          <dl class="stats">
+            <div><dt>Sites</dt><dd id="st-sites">0</dd></div>
+            <div><dt>Pays</dt><dd id="st-countries">0</dd></div>
+            <div><dt>Secteurs</dt><dd id="st-sectors">0</dd></div>
+          </dl>
+        </div>
+
+        <a class="mini" id="mini" href="atlas.html" aria-label="Ouvrir l’atlas des sites industriels">
+          <div class="mini-stage">
+            <div class="mini-layer" id="mini-layer">
+              <img id="mini-base" alt="" draggable="false">
+              <img src="carte/regions.svg" class="mini-reg" alt="" draggable="false">
+            </div>
+            <div class="mini-dots" id="mini-dots"></div>
+          </div>
+          <span class="mini-tag mono" id="mini-tag"></span>
+          <span class="mini-open">Ouvrir l’atlas <span aria-hidden="true">↗</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- À propos : quatre facettes -->
+  <section class="page" id="a-propos" data-nav="À propos">
+    <div class="page-in">
+      <div class="quads">
+        <article class="quad q-inge" id="q-inge">
+          <div class="q-head">
+            <p class="sec-label mono"><span class="sec-num"></span>À propos</p>
+            <h2 class="q-title" id="qi-title"></h2>
+            <p class="q-sub" id="qi-sub"></p>
+          </div>
+          <ol class="frise" id="qi-frise"></ol>
+          <dl class="cartouche mono" id="qi-cart"></dl>
+        </article>
+
+        <article class="quad q-mont" id="q-mont">
+          <div class="q-photos" id="qm-photos" aria-hidden="true"></div>
+          <div class="q-head">
+            <h2 class="q-title" id="qm-title"></h2>
+            <p class="q-sub" id="qm-sub"></p>
+          </div>
+        </article>
+
+        <article class="quad q-charp" id="q-charp">
+          <div class="q-bg" id="qc-bg" aria-hidden="true"></div>
+          <div class="q-head">
+            <h2 class="q-title" id="qc-title"></h2>
+            <p class="q-sub" id="qc-sub"></p>
+          </div>
+          <ul class="cotes" id="qc-cotes"></ul>
+          <ul class="habs mono" id="qc-habs" aria-label="Habilitations"></ul>
+        </article>
+
+        <article class="quad q-code" id="q-code">
+          <div class="q-head">
+            <h2 class="q-title" id="qd-title"></h2>
+            <p class="q-sub" id="qd-sub"></p>
+          </div>
+          <div class="term">
+            <div class="term-bar mono" aria-hidden="true"><i></i><i></i><i></i><span>valentin@atlas : ~/fun-projects</span></div>
+            <div class="term-body mono" id="qd-term"></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Karakuri Kaizen -->
+  <section class="page" id="karakuri" data-nav="Karakuri">
+    <div class="page-in band-light">
+      <div class="kk-bg" id="kk-bg" aria-hidden="true" hidden></div>
+      <div class="kk-bg2" id="kk-bg2" aria-hidden="true" hidden></div>
+      <div class="sec wrap">
+        <div class="sec-label mono"><span class="sec-num"></span>Karakuri Kaizen®</div>
+        <div class="sec-body">
+          <div class="kk-head">
+            <h2 class="sec-title" id="kk-title"></h2>
+            <p class="kk-intro" id="kk-intro"></p>
+          </div>
+          <ol class="steps" id="kk-steps"></ol>
+          <dl class="figures" id="kk-figures"></dl>
+          <article class="case" id="kk-case"></article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Productions -->
+  <section class="page" id="productions" data-nav="Productions">
+    <div class="page-in">
+      <div class="sec wrap">
+        <div class="pj-side">
+          <div class="sec-label mono"><span class="sec-num"></span>Productions</div>
+          <!-- figure en fond de colonne : estompée, révélée au clic -->
+          <button class="pj-fig" id="pj-fig" type="button" aria-pressed="false" hidden>
+            <img id="pj-fig-img" alt="" draggable="false">
+            <span class="pj-cap"><span class="pj-num mono" id="pj-fig-num"></span><b id="pj-fig-title"></b><span id="pj-fig-text"></span></span>
+          </button>
+        </div>
+        <div class="sec-body">
+          <ul class="docs" id="pj-docs"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ailleurs -->
+  <section class="page page-dark" id="ailleurs" data-nav="Ailleurs">
+    <div class="page-in away">
+      <div class="away-bgs" id="ai-bgs" aria-hidden="true"></div>
+      <div class="away-shade" aria-hidden="true"></div>
+      <div class="sec wrap">
+        <div class="sec-label mono"><span class="sec-num"></span>Ailleurs</div>
+        <div class="sec-body">
+          <p class="away-intro" id="ai-intro"></p>
+          <div class="away-grid">
+            <ol class="away-list" id="ai-list"></ol>
+            <div class="away-photo" id="ai-photos" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="page page-dark" id="contact" data-nav="Contact">
+    <div class="page-in contact">
+      <div class="wrap sec">
+        <div class="sec-label mono"><span class="sec-num"></span>Contact</div>
+        <div class="sec-body">
+          <h2 class="c-title" id="c-title"></h2>
+          <a class="c-mail" id="c-mail" hidden></a>
+          <div class="c-links" id="c-links"></div>
+          <p class="c-note mono" id="c-note"></p>
+        </div>
+      </div>
+      <footer class="foot wrap mono">
+        <span id="copy"></span>
+        <span>Fond de carte : Natural Earth</span>
+      </footer>
+    </div>
+  </section>
+</main>
+<script src="mes-sites.js"></script>
+<script src="mon-profil.js"></script>
+<script src="app/retro/tk-colors.js"></script>
+<script src="app/retro/sources.js"></script>
+<script src="app/retro/retro.js"></script>
+<script src="app/profil.js"></script>
+</body>
+</html>
