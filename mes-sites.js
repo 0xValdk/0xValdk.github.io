@@ -108,7 +108,7 @@ window.SITES = [
     lat: 50.3661, lon: 3.6098,
     gmaps: 'https://maps.app.goo.gl/L4Zm5Atezb5dxfTp9',
     start: '', end: '',
-    role: 'Installation et mise en service',
+    role: 'Installation · Mise en service',
     description: 'Conception, installation, réglage et mise en flux d’une boucle de navettes avec ascenseur à pédale et bascule 4 barres.',
     notes: '',
     extras: []
@@ -122,7 +122,7 @@ window.SITES = [
     lat: 50.3348, lon: 3.4719,
     gmaps: 'https://maps.app.goo.gl/1555RCG9jFTeEi4S6',
     start: '', end: '',
-    role: 'Installation et mise en service',
+    role: 'Installation · Mise en service',
     description: 'Installation, réglage, programmation de la logique SiO et essais d’une boucle associant AGV et shishi-odoshi.',
     notes: '',
     extras: []
@@ -165,7 +165,7 @@ window.SITES = [
     gmaps: 'https://maps.app.goo.gl/hr6THeXoy7Wr4Tss6',
     start: '', end: '',
     role: 'Formation',
-    description: 'Formation des équipes du site à la conception et à la fabrication d’un ascenseur à pédale et d’une bascule 4 barres pour le recyclage des bacs vides.',
+    description: 'Formation des équipes du site à l’ascenseur à pédale et à la bascule 4 barres pour le recyclage des bacs vides.',
     notes: '',
     extras: []
   },
@@ -179,7 +179,7 @@ window.SITES = [
     gmaps: 'https://maps.app.goo.gl/PZUMk1fkvuB8Czbr9',
     start: '', end: '',
     role: 'Formation',
-    description: 'Formation des équipes du site, en trois sessions de trois jours, à la conception et à la fabrication d’un ascenseur à pédale, d’une bascule 4 barres et d’un shoot latéral.',
+    description: 'Formation des équipes du site, en trois sessions de trois jours, à l’ascenseur à pédale, à la bascule 4 barres et au shoot latéral.',
     notes: '',
     extras: []
   },
@@ -193,7 +193,7 @@ window.SITES = [
     gmaps: 'https://maps.app.goo.gl/AMr2WqSeiYVk1tqp6',
     start: '', end: '',
     role: 'Formation',
-    description: 'Formation des équipes du site à la conception et à la fabrication d’un système de prise et de dépose qui épargne à l’opérateur toute manipulation et tout effort.',
+    description: 'Formation des équipes du site à un système de prise et de dépose qui épargne à l’opérateur toute manipulation et tout effort.',
     notes: '',
     extras: []
   },
@@ -207,7 +207,7 @@ window.SITES = [
     gmaps: 'https://maps.app.goo.gl/1F3ZoBaL6b7jmP6f8',
     start: '', end: '',
     role: 'Formation',
-    description: 'Formation des équipes du site à la conception et à la fabrication d’un ascenseur à pédale.',
+    description: 'Formation des équipes du site à l’ascenseur à pédale.',
     notes: '',
     extras: []
   },
@@ -221,7 +221,7 @@ window.SITES = [
     gmaps: 'https://maps.app.goo.gl/pjhSY4oMKxdrDsB87',
     start: '', end: '',
     role: 'Formation',
-    description: 'Formation des équipes du site à la conception et à la fabrication d’une bascule 4 barres.',
+    description: 'Formation des équipes du site à la bascule 4 barres.',
     notes: '',
     extras: []
   },
@@ -263,7 +263,7 @@ window.SITES = [
     gmaps: 'https://maps.app.goo.gl/grcXdaZngRLFPgeE7',
     start: '', end: '',
     role: 'Formation',
-    description: 'Formation des équipes du site à la conception et à la fabrication d’une bascule 4 barres.',
+    description: 'Formation des équipes du site à la bascule 4 barres.',
     notes: '',
     extras: []
   },
@@ -347,7 +347,7 @@ window.SITES = [
     gmaps: 'https://maps.app.goo.gl/fkEqVnN6TnLXRvHj8',
     start: '', end: '',
     role: 'Formation',
-    description: 'Formation des équipes du site (niveau II) à la conception et à la fabrication d’un ascenseur à pédale, d’un shoot latéral et d’une bascule 4 barres.',
+    description: 'Formation des équipes du site (niveau II) à l’ascenseur à pédale, au shoot latéral et à la bascule 4 barres.',
     notes: '',
     extras: []
   },
@@ -403,7 +403,7 @@ window.SITES = [
     gmaps: 'https://maps.app.goo.gl/UCpJEKRRgedFmW4C7',
     start: '', end: '',
     role: 'Formation',
-    description: 'Formation des équipes du site à la conception et à la fabrication d’une bascule 4 barres.',
+    description: 'Formation des équipes du site à la bascule 4 barres.',
     notes: '',
     extras: []
   },
@@ -487,7 +487,7 @@ window.SITES = [
     gmaps: 'https://maps.app.goo.gl/HXvR8x1uc3rq7Luo7',
     start: '', end: '',
     role: 'Formation',
-    description: 'Formation des équipes du site à la conception et à la fabrication d’une bascule 4 barres.',
+    description: 'Formation des équipes du site à la bascule 4 barres.',
     notes: '',
     extras: []
   },
@@ -501,7 +501,7 @@ window.SITES = [
     gmaps: 'https://maps.app.goo.gl/KYR3YNhB5R6jF9U68',
     start: '', end: '',
     role: 'Formation',
-    description: 'Formation des équipes du site à la conception et à la fabrication d’un shoot latéral et d’un mongata.',
+    description: 'Formation des équipes du site au shoot latéral et au mongata.',
     notes: '',
     extras: []
   },
@@ -515,7 +515,7 @@ window.SITES = [
     gmaps: 'https://maps.app.goo.gl/QbFXmiLhTinQKbR86',
     start: '', end: '',
     role: 'Formation',
-    description: 'Formation des équipes du site à la conception et à la fabrication d’un ascenseur SiO.',
+    description: 'Formation des équipes du site à l’ascenseur SiO.',
     notes: '',
     extras: []
   },
@@ -529,7 +529,7 @@ window.SITES = [
     gmaps: 'https://maps.app.goo.gl/AFzLiy9uw643AgD59',
     start: '', end: '',
     role: 'Workshop · Formation',
-    description: '• Réalisation, avec les équipes du site, d’un mongata avec mise en picking frontale.\n• Formation des équipes à la conception et à la fabrication d’un ascenseur à pédale.',
+    description: '• Réalisation, avec les équipes du site, d’un mongata avec mise en picking frontale.\n• Formation des équipes à l’ascenseur à pédale.',
     notes: '',
     extras: []
   }
