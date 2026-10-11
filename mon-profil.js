@@ -144,7 +144,7 @@ window.PROFIL = {
       resume: 'Dans le but de caractériser le comportement électrique de films nanostructurés de pentoxyde de vanadium (V₂O₅·nH₂O) destinés à la détection de gaz, différentes analyses ont été réalisées afin d’étudier leur composition et leur morphologie. La résistance électrique des échantillons a ensuite été mesurée en fonction de la température et des conditions atmosphériques. Les résultats obtenus ont permis de constituer une base de données destinée à améliorer la compréhension des propriétés du matériau et à contribuer à la modélisation de son comportement en vue de son application dans des capteurs de gaz.'
     },
     {
-      titre: 'Transfert d’un atelier d’essais de composants aéronautiques',
+      titre: 'Transfert d’un atelier d’essais aéronautiques',
       contexte: 'Équip’Aéro Services · alternance · 2018',
       texte: 'Étude d’avant-projet : enveloppe budgétaire, planning, analyse des risques et cahiers des charges pour réimplanter une activité d’essais hydrauliques.',
       note: 'Rapport confidentiel',
