@@ -109,6 +109,13 @@
 
   // Montagne : fondu enchaîné entre les photos, seulement quand la page est affichée
   setText('qm-title', QM.titre); setText('qm-sub', QM.sousTitre);
+  var fiches = list((P.apropos && P.apropos.montagne || {}).fiches).filter(function (f) { return f.sport; });
+  $('qm-fiches').innerHTML = fiches.map(function (f) {
+    return '<div class="q-fiche"><span class="q-fiche-sport mono">' + esc(f.sport) + '</span>' +
+      (f.niveau ? '<span class="q-fiche-niv"><span class="q-fiche-k">Niveau</span> ' + esc(f.niveau) + '</span>' : '') +
+      (f.phrase ? '<span class="q-fiche-phrase">« ' + esc(f.phrase) + ' »</span>' : '') + '</div>';
+  }).join('');
+  $('qm-fiches').hidden = !fiches.length;
   var mPhotos = (QM.photos || []).filter(Boolean), mImgs = [], mDots = [], mCur = 0, mTimer = null;
   mPhotos.forEach(function (src, k) {
     var im = document.createElement('img'); im.alt = ''; im.decoding = 'async'; im.src = src;
@@ -221,10 +228,23 @@
     if (p.note) return '<span class="lock">' + LOCK + esc(p.note) + '</span>';
     return '';
   }
-  $('pj-docs').innerHTML = productions.map(function (p) {
-    return '<li class="doc"><p class="ctx mono">' + esc(p.contexte) + '</p><div><h3>' + esc(p.titre) + '</h3>' + (p.texte ? '<p class="t">' + esc(p.texte) + '</p>' : '') + '</div>' +
-      '<div class="act">' + action(p) + '</div></li>';
+  $('pj-docs').innerHTML = productions.map(function (p, i) {
+    var res = String(p.resume || '').trim().split(/\n\s*\n/).map(function (x) { return x.trim(); }).filter(Boolean);
+    return '<li class="doc' + (res.length ? ' has-res' : '') + '"><p class="ctx mono">' + esc(p.contexte) + '</p><div>' +
+      // avec un résumé, le titre est le bouton (accessible au clavier) ; aucun bouton visible en plus
+      (res.length ? '<h3><button type="button" class="doc-toggle" aria-expanded="false" aria-controls="pj-res-' + i + '">' + esc(p.titre) + '</button></h3>' : '<h3>' + esc(p.titre) + '</h3>') +
+      (p.texte ? '<p class="t">' + esc(p.texte) + '</p>' : '') +
+      (res.length ? '<div class="resume" id="pj-res-' + i + '"><div>' + res.map(function (x) { return '<p>' + esc(x).replace(/\n/g, '<br>') + '</p>'; }).join('') + '</div></div>' : '') +
+      '</div><div class="act">' + action(p) + '</div></li>';
   }).join('');
+  // un clic sur la ligne (hors lien et hors texte du résumé) déroule ou replie le résumé
+  $('pj-docs').addEventListener('click', function (e) {
+    var li = e.target.closest('.doc.has-res');
+    if (!li || e.target.closest('a') || e.target.closest('.resume')) return;
+    var b = li.querySelector('.doc-toggle'), open = b.getAttribute('aria-expanded') !== 'true';
+    b.setAttribute('aria-expanded', String(open));
+    li.classList.toggle('open', open);
+  });
   // figure en fond, révélée au clic (un second clic ou un changement de page la ré-estompe)
   var FIG = clean(P.productionsFigure || {}), fig = $('pj-fig');
   if (FIG.image) {
@@ -240,9 +260,10 @@
 
   // ---------- 04 · Ailleurs ----------
   // Au plus un fond et une photo par voyage ; le voyage survolé (ou touché) devient actif.
+  // Sans action du visiteur, les voyages défilent seuls ; le survol de la liste met en pause.
   setText('ai-intro', P.ailleursIntro);
   var trips = list(P.voyages).filter(function (v) { return v.pays; });
-  var bgs = [], pics = [], items = [];
+  var bgs = [], pics = [], items = [], resEls = [];
   trips.forEach(function (v, i) {
     if (v.fond) {
       var bg = document.createElement('div');
@@ -262,13 +283,39 @@
       '<span class="away-name">' + esc(v.pays) + '</span>' + (v.texte ? '<span class="away-text">' + esc(v.texte) + '</span>' : '') + '</button>';
     var btn = li.firstChild;
     if (v.fond) btn.style.setProperty('--img', cssUrl(v.fond));   // bandeau sur téléphone
-    btn.addEventListener('mouseenter', function () { setTrip(i); });
-    btn.addEventListener('focus', function () { setTrip(i); });
-    btn.addEventListener('click', function () { setTrip(i); });
+    // résumé facultatif, déroulé sous le pays au clic
+    var res = String(v.resume || '').trim().split(/\n\s*\n/).map(function (x) { return x.trim(); }).filter(Boolean);
+    if (res.length) {
+      var rd = document.createElement('div');
+      rd.className = 'away-res'; rd.id = 'ai-res-' + i;
+      rd.innerHTML = '<div>' + res.map(function (x) { return '<p>' + esc(x).replace(/\n/g, '<br>') + '</p>'; }).join('') + '</div>';
+      li.appendChild(rd);
+      btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-controls', rd.id);
+      resEls[i] = rd;
+    }
+    // tant qu'un résumé est déroulé, le survol des autres pays ne change plus rien (seul le clic agit)
+    btn.addEventListener('mouseenter', function () { if (aiOpen < 0) setTrip(i); });
+    btn.addEventListener('focus', function () { if (aiOpen < 0) setTrip(i); });
+    btn.addEventListener('click', function () { setTrip(i); if (resEls[i]) openRes(aiOpen === i ? -1 : i); });
     $('ai-list').appendChild(li);
     items[i] = btn;
   });
+  var AI_DELAY = 7000;   // temps entre deux voyages, en millisecondes (7000 = 7 s)
+  var aiCur = 0, aiTimer = null, aiHere = false, aiHold = false, aiOpen = -1;
+  // un seul résumé ouvert à la fois ; tant qu'il l'est, le défilement automatique s'arrête
+  function openRes(n) {
+    aiOpen = n;
+    $('ai-list').classList.toggle('has-open', n >= 0);
+    resEls.forEach(function (r, i) {
+      if (!r) return;
+      r.parentNode.classList.toggle('res-open', i === n);
+      items[i].setAttribute('aria-expanded', String(i === n));
+    });
+    aiSchedule();
+  }
   function setTrip(n) {
+    if (aiOpen >= 0 && aiOpen !== n) openRes(-1);
+    aiCur = n;
     trips.forEach(function (v, i) {
       var on = i === n;
       items[i].classList.toggle('on', on);
@@ -277,6 +324,22 @@
       if (pics[i]) pics[i].classList.toggle('on', on);
     });
   }
+  // défilement automatique : uniquement page affichée, liste non survolée, écran assez large
+  function aiSchedule() {
+    clearTimeout(aiTimer);
+    if (!aiHere || aiHold || aiOpen >= 0 || trips.length < 2 || !window.matchMedia('(min-width: 641px)').matches) return;
+    aiTimer = setTimeout(function () { setTrip((aiCur + 1) % trips.length); aiSchedule(); }, AI_DELAY);
+  }
+  var aiList = $('ai-list');
+  function aiPause(on) { aiHold = on; aiSchedule(); }
+  aiList.addEventListener('mouseenter', function () { aiPause(true); });
+  aiList.addEventListener('mouseleave', function () { aiPause(false); });
+  aiList.addEventListener('focusin', function () { aiPause(true); });
+  aiList.addEventListener('focusout', function (e) { if (!aiList.contains(e.relatedTarget)) aiPause(false); });
+  document.addEventListener('page:show', function (e) {
+    aiHere = e.detail === 'ailleurs';
+    if (!aiHere && aiOpen >= 0) openRes(-1); else aiSchedule();
+  });
   if (trips.length) setTrip(0);
   $('ailleurs').hidden = !trips.length;
 
@@ -284,6 +347,7 @@
   var ICONS = {
     in: '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3zM9.5 9.75h3.8v1.6h.06c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.77 2.65 4.77 6.1v5.35h-4v-4.74c0-1.13-.02-2.59-1.58-2.59-1.58 0-1.82 1.23-1.82 2.5v4.83h-4z"/></svg>',
     tel: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>',
+    cv: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>',
     pin: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>'
   };
   setText('c-title', P.contactTitre);
@@ -299,8 +363,14 @@
   }
   if (P.telephone) links.push('<a href="tel:' + esc(P.telephone.replace(/[^\d+]/g, '')) + '">' + ICONS.tel + esc(P.telephone) + '</a>');
   if (P.localisation) links.push('<span>' + ICONS.pin + esc(P.localisation) + '</span>');
+  // CV sur demande : un clic ouvre un e-mail prérempli ; sans adresse, simple mention
+  if (P.cvSurDemande && P.email) {
+    var cvHref = 'mailto:' + P.email + '?subject=' + encodeURIComponent(P.cvObjet || 'Demande de CV') +
+      (P.cvMessage ? '&body=' + encodeURIComponent(P.cvMessage) : '');
+    links.push('<a class="c-cv" href="' + esc(cvHref) + '">' + ICONS.cv + 'Demander mon CV</a>');
+  }
   $('c-links').innerHTML = links.join('');
-  $('c-note').textContent = P.cvSurDemande ? 'CV disponible sur demande' : '';
+  $('c-note').textContent = P.cvSurDemande && !P.email ? 'CV disponible sur demande' : '';
   var hasContact = P.email || P.linkedin || P.telephone;
   $('contact').hidden = !hasContact;
   $('cta-contact').hidden = !hasContact;
