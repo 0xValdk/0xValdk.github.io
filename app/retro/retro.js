@@ -1,7 +1,6 @@
 /* Fenêtres rétro (façon Windows 98 / Tkinter) et portages JavaScript fidèles de trois
    programmes Python d'origine : PySnake, PyShader et PyFract (code dans medias/dev).
-   Ouverture : Retro.open('snake' | 'shader' | 'fract').
-   Projet récent (vidéo + source VBA) : Retro.projet(p, afficherSource). */
+   Ouverture : Retro.open('snake' | 'shader' | 'fract'). */
 (function () {
   'use strict';
 
@@ -77,7 +76,7 @@
     w.el = el;
 
     if (o.source) {
-      var bsrc = h('button', { type: 'button', class: 'rw-tb rw-tb-src', text: 'Source', title: o.sourceTitle || 'Voir le code Python d’origine', 'aria-pressed': 'false' });
+      var bsrc = h('button', { type: 'button', class: 'rw-tb rw-tb-src', text: 'Source', title: 'Voir le code Python d’origine', 'aria-pressed': 'false' });
       tbs.appendChild(bsrc);
     }
     tbs.appendChild(h('button', { type: 'button', class: 'rw-tb', 'aria-label': 'Fermer', html: CLOSE, onclick: function () { close(w); } }));
@@ -96,12 +95,9 @@
       var toggleSrc = function (on) {
         el.classList.toggle('show-src', on);
         bsrc.setAttribute('aria-pressed', String(on));
-        bsrc.textContent = on ? (o.sourceBack || 'Programme') : 'Source';
-        if (o.onSource) o.onSource(on);
+        bsrc.textContent = on ? 'Programme' : 'Source';
       };
       bsrc.addEventListener('click', function () { toggleSrc(!el.classList.contains('show-src')); });
-      w.showSource = toggleSrc;
-      if (o.showSource) toggleSrc(true);
     }
 
     w.onClose = o.onClose;
@@ -189,36 +185,17 @@
     }
     return out + esc(code.slice(last));
   }
-  // VBA : commentaires ('), chaînes ("" = guillemet échappé), mots-clés et nombres
-  var KW_VBA = /^(Option|Explicit|Const|Dim|ReDim|As|New|Set|If|Then|Else|ElseIf|End|Sub|Function|Private|Public|ByRef|ByVal|For|Each|To|Step|Next|Do|While|Loop|Exit|On|Error|Resume|GoTo|Not|And|Or|Mod|Like|Is|Nothing|True|False|String|Double|Single|Long|Boolean|Variant|Object|Collection|Call)$/;
-  function highlightVba(code) {
-    var re = /('[^\n]*)|("(?:""|[^"\n])*")|([A-Za-z_]\w*)|(\d+(?:\.\d+)?#?)/g, out = '', last = 0, m;
-    while ((m = re.exec(code))) {
-      out += esc(code.slice(last, m.index));
-      if (m[1]) out += '<i class="py-c">' + esc(m[1]) + '</i>';
-      else if (m[2]) out += '<i class="py-s">' + esc(m[2]) + '</i>';
-      else if (m[3]) out += KW_VBA.test(m[3]) ? '<i class="py-k">' + m[3] + '</i>' : m[3];
-      else out += '<i class="py-n">' + m[4] + '</i>';
-      last = re.lastIndex;
-    }
-    return out + esc(code.slice(last));
-  }
-  // src : nom d'un programme Python (PY_SOURCES), ou { name, code, ext, type, info, note, hl, crlf, back }
-  function sourcePanel(src, back) {
-    var s = typeof src === 'string'
-      ? { name: src, code: (window.PY_SOURCES || {})[src], ext: 'py', type: 'text/x-python', info: 'Python / Tkinter', note: 'écrit avant l’IA', hl: highlight }
-      : src;
-    var code = s.code || '# Source introuvable';
-    var file = s.name + '.' + s.ext;
+  function sourcePanel(name, back) {
+    var code = (window.PY_SOURCES || {})[name] || '# Source introuvable';
     var lines = code.split('\n').length;
     var gutter = Array.apply(null, { length: lines }).map(function (_, i) { return i + 1; }).join('\n');
-    var dl = button('Télécharger ' + file, function () {
-      var a = h('a', { href: URL.createObjectURL(new Blob([s.crlf ? code.replace(/\n/g, '\r\n') : code], { type: s.type })), download: file });
+    var dl = button('Télécharger ' + name + '.py', function () {
+      var a = h('a', { href: URL.createObjectURL(new Blob([code], { type: 'text/x-python' })), download: name + '.py' });
       document.body.appendChild(a); a.click(); a.remove();
     });
     return h('div', { class: 'rw-srcp' }, [
-      h('div', { class: 'rw-srch' }, [label(file + ' · ' + s.info + ' · ' + lines + ' lignes' + (s.note ? ', ' + s.note : '')), dl, button(s.back || 'Retour au programme', back)]),
-      h('div', { class: 'rw-code' }, [h('pre', { class: 'gut', 'aria-hidden': 'true', text: gutter }), h('pre', { class: 'src', html: s.hl(code) })])
+      h('div', { class: 'rw-srch' }, [label(name + '.py · Python / Tkinter · ' + lines + ' lignes, écrit avant l’IA'), dl, button('Retour au programme', back)]),
+      h('div', { class: 'rw-code' }, [h('pre', { class: 'gut', 'aria-hidden': 'true', text: gutter }), h('pre', { class: 'src', html: highlight(code) })])
     ]);
   }
 
@@ -685,35 +662,11 @@
     }
   }
 
-  // =====================================================================
-  //  Projet récent : vidéo de démonstration + code source (VBA_SOURCES)
-  //  p = { titre, video, poster, source, statut } (mon-profil.js → apropos.code.projets)
-  // =====================================================================
-  var projWins = {};
-  function openProjet(p, showSource) {
-    var key = p.source || p.titre, ow = projWins[key];
-    if (ow) { ow.front(); if (ow.showSource) ow.showSource(!!showSource); return; }
-    var vid = null;
-    if (p.video) {
-      vid = h('video', { src: p.video, poster: p.poster, controls: true, loop: true, playsinline: true, preload: 'metadata' });
-      vid.muted = true;
-    }
-    var w = projWins[key] = win({
-      title: p.titre, cls: 'rw-projet', status: p.statut || null, showSource: showSource,
-      source: p.source ? { name: p.source, code: (window.VBA_SOURCES || {})[p.source], ext: 'bas', type: 'text/plain', info: 'VBA / SolidWorks', note: 'version publique caviardée', hl: highlightVba, crlf: true, back: 'Retour à la vidéo' } : null,
-      sourceTitle: 'Voir le code VBA', sourceBack: 'Vidéo',
-      onSource: function (on) { if (!vid) return; if (on) vid.pause(); else { var pr = vid.play(); if (pr) pr.catch(function () {}); } },
-      onClose: function () { delete projWins[key]; }
-    });
-    if (vid) { w.body.appendChild(vid); if (!showSource) { var pr = vid.play(); if (pr) pr.catch(function () {}); } }
-  }
-
   window.Retro = {
     open: function (name) {
       if (name === 'snake') openSnake();
       else if (name === 'shader') openShader();
       else if (name === 'fract') openFract();
-    },
-    projet: openProjet
+    }
   };
 })();

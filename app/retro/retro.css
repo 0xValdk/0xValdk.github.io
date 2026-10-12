@@ -91,10 +91,6 @@
 @media (pointer: coarse) { .sn-pad { display: grid; } }
 .rw-shader .tk-canvas { width: 550px; background: #f0f0f0; cursor: pointer; }
 .rw-view .tk-canvas.fr { width: min(520px, calc(100vw - 40px), calc(100vh - 160px)); image-rendering: auto; }
-/* Projet récent : vidéo 16:9 et code plus large (lignes VBA longues) */
-.rw-projet .rw-body { padding: 4px; }
-.rw-projet video { display: block; width: min(960px, calc(100vw - 40px), calc((100vh - 110px) * 16 / 9)); aspect-ratio: 16 / 9; background: #000; box-shadow: inset 1px 1px #808080; }
-.rw-projet .rw-srcp { width: min(960px, calc(100vw - 24px)); }
 
 /* ---- Téléphone : fenêtres principales en pleine largeur ---- */
 @media (max-width: 640px) {

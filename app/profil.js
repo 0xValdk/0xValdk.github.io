@@ -149,12 +149,12 @@
   $('qc-habs').hidden = !habs.length;
   $('q-charp').hidden = !(QC.titre || cotes.length);
 
-  // Code & IA : projets récents (vidéo + source dans une fenêtre rétro), compétences, puis archives
+  // Code & IA : projets récents (vidéo + code dans une fenêtre, app/projet.js), compétences,
+  // puis archives (fenêtres rétro, app/retro)
   setText('qd-title', QD.titre); setText('qd-sub', QD.sousTitre);
-  function retro(fn) { return function () { if (window.Retro) fn(window.Retro); }; }
+  function projet(p, tab) { return function () { if (window.Projet) window.Projet.open(p, tab); }; }
   var projs = list(QD.projets).filter(function (p) { return p.titre; });
   projs.forEach(function (p) {
-    var fen = Object.assign({}, p, { titre: p.titre + (p.techno ? ' (' + p.techno + ')' : '') });
     var el = document.createElement('article');
     el.className = 'q-proj';
     el.innerHTML =
@@ -167,9 +167,9 @@
       (p.lien ? '<a class="q-btn mono" href="' + esc(p.lien) + '" target="_blank" rel="noopener">' + esc(p.lienTexte || 'Voir la démo') + ' ↗</a>' : '') +
       '</div></div>';
     var img = el.querySelector('.q-proj-img');
-    if (img) { img.setAttribute('aria-label', 'Voir la vidéo : ' + p.titre); img.addEventListener('click', retro(function (R) { R.projet(fen, false); })); }
+    if (img) { img.setAttribute('aria-label', 'Voir la vidéo : ' + p.titre); img.addEventListener('click', projet(p, 'video')); }
     el.querySelectorAll('[data-act]').forEach(function (b) {
-      b.addEventListener('click', retro(function (R) { R.projet(fen, b.getAttribute('data-act') === 'src'); }));
+      b.addEventListener('click', projet(p, b.getAttribute('data-act') === 'src' ? 'code' : 'video'));
     });
     $('qd-projs').appendChild(el);
   });
@@ -186,7 +186,7 @@
     el.innerHTML = '<span class="go" aria-hidden="true">▶</span><span class="f">' + esc(g.fichier) + '</span><span class="d">' + esc(g.description || '') + '</span>';
     el.setAttribute('aria-label', 'Lancer ' + g.fichier + (g.description ? ' : ' + g.description : ''));
     if (g.description) el.title = g.description;
-    el.addEventListener('click', retro(function (R) { R.open(g.app); }));
+    el.addEventListener('click', function () { if (window.Retro) window.Retro.open(g.app); });
     $('qd-progs').appendChild(el);
   });
   $('qd-arch').hidden = !progs.length;
@@ -470,7 +470,7 @@
   // clavier : ← → et Page préc./suiv. en bout de page
   document.addEventListener('keydown', function (e) {
     if (e.altKey || e.ctrlKey || e.metaKey || /input|textarea|select/i.test(e.target.tagName)) return;
-    if (document.documentElement.classList.contains('rw-open')) return;   // une fenêtre rétro a la main
+    if (/\b(rw|pj)-open\b/.test(document.documentElement.className)) return;   // une fenêtre a la main
     var pg = pages[cur];
     if (e.key === 'ArrowRight') { e.preventDefault(); go(cur + 1); }
     else if (e.key === 'ArrowLeft') { e.preventDefault(); go(cur - 1); }

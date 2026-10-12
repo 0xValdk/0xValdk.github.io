@@ -483,3 +483,45 @@ h1 { margin: -6px 0 0; font-size: clamp(48px, 7vw, 96px); line-height: .95; font
   .away-res p:last-child { padding-bottom: 8px; }
   .away-item .away-text { grid-column: 1; max-height: none; margin-top: 2px; }
 }
+
+/* ---------- Fenêtre « projet » (app/projet.js) : vidéo et code, dans le ton du quadrant Code & IA ---------- */
+.pj-ov { position: fixed; inset: 0; z-index: 1100; display: grid; place-items: center; padding: 24px; background: rgba(6,10,14,.72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); animation: pj-fade .2s ease-out; }
+.pj-dlg { width: min(1100px, 100%); max-height: calc(100svh - 48px); display: flex; flex-direction: column; overflow: hidden; border: 1px solid #2A3743; border-radius: 12px; background: #0E151C; color: #E6EDF3; box-shadow: 0 30px 80px -20px rgba(0,0,0,.7); animation: rise .35s cubic-bezier(.2,.7,.2,1); }
+@keyframes pj-fade { from { opacity: 0; } }
+.pj-hd { flex: none; display: flex; align-items: center; gap: 18px; padding: 14px 14px 14px 22px; border-bottom: 1px solid #1E2934; }
+.pj-title { flex: 1; min-width: 0; margin: 0; font-size: 18px; font-weight: 600; letter-spacing: -.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pj-title .mono { margin-left: 4px; font-size: 11px; font-weight: 600; letter-spacing: .12em; vertical-align: middle; color: #F08A5D; }
+.pj-tabs { flex: none; display: flex; padding: 3px; border: 1px solid #2A3743; border-radius: 8px; background: #0A1016; }
+.pj-tabs button { height: 28px; padding: 0 14px; border: 0; border-radius: 5px; background: none; color: #8B98A5; font: inherit; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; transition: background-color .15s, color .15s; }
+.pj-tabs button span { font-size: 9px; }
+.pj-tabs button:hover { color: #E6EDF3; }
+.pj-tabs button[aria-selected="true"] { background: #1E2934; color: #E6EDF3; }
+.pj-tabs button[aria-selected="true"] span { color: #F08A5D; }
+.pj-tabs button:focus-visible, .pj-x:focus-visible, .pj-dl:focus-visible, .pj-code:focus-visible { outline: 2px solid #F08A5D; outline-offset: 2px; }
+.pj-x { flex: none; width: 34px; height: 34px; display: grid; place-items: center; border: 0; border-radius: 8px; background: none; color: #8B98A5; cursor: pointer; transition: background-color .15s, color .15s; }
+.pj-x:hover { background: #1E2934; color: #E6EDF3; }
+.pj-panel { flex: 1; min-height: 0; }
+.pj-panel[hidden] { display: none; }
+.pj-video { display: grid; place-items: center; background: #000; }
+.pj-video video { display: block; width: 100%; max-height: calc(100svh - 170px); aspect-ratio: 16 / 9; background: #000; }
+.pj-code { display: flex; height: min(720px, calc(100svh - 170px)); overflow: auto; background: #0A1016; scrollbar-width: thin; scrollbar-color: #2A3743 transparent; }
+.pj-code pre { margin: 0; padding: 16px 18px; font: 12.5px/1.6 'IBM Plex Mono', ui-monospace, Consolas, monospace; tab-size: 4; }
+.pj-code .gut { flex: none; position: sticky; left: 0; padding-right: 14px; text-align: right; color: #3E4C5A; background: #0A1016; border-right: 1px solid #1E2934; user-select: none; }
+.pj-code .src { flex: 1; color: #D5DDE5; }
+.pj-code i { font-style: normal; }
+.pj-c { color: #6E7C8A; } .pj-s { color: #A8D5A2; } .pj-k { color: #F08A5D; } .pj-n { color: #F5BE4F; }
+.pj-ft { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 48px; padding: 8px 14px 8px 22px; border-top: 1px solid #1E2934; font-size: 11px; letter-spacing: .06em; color: #8B98A5; }
+.pj-dl { flex: none; display: inline-flex; align-items: center; gap: 8px; height: 30px; padding: 0 12px; border: 1px solid #3A4A59; border-radius: 6px; background: none; color: #E6EDF3; font: inherit; letter-spacing: .06em; cursor: pointer; transition: border-color .15s, background-color .15s; }
+.pj-dl[hidden] { display: none; }
+.pj-dl:hover { border-color: #F08A5D; background: rgba(240,138,93,.10); }
+@media (max-width: 640px) {
+  .pj-ov { padding: 0; }
+  .pj-dlg { height: 100svh; max-height: none; border: 0; border-radius: 0; }
+  .pj-hd { flex-wrap: wrap; gap: 10px; padding: 12px 10px 12px 16px; }
+  .pj-tabs { order: 3; width: 100%; } .pj-tabs button { flex: 1; }
+  .pj-video { flex: 1; }
+  .pj-code { flex: 1; height: auto; }
+  .pj-code pre { padding: 12px 10px; font-size: 11.5px; }
+  .pj-ft { flex-wrap: wrap; padding: 8px 12px 12px 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .pj-ov, .pj-dlg { animation: none; } }

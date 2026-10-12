@@ -77,13 +77,14 @@ window.PROFIL = {
 
       // « Aujourd'hui » : un bloc par projet.
       //   video + poster : vidéo de démonstration (images/code/), ouverte dans une fenêtre
-      //   source : nom du code dans app/retro/sources-vba.js (bouton « Source »)
+      //   statut : ligne affichée sous la vidéo
+      //   source : nom du code dans app/sources-vba.js (onglet « Code » de la fenêtre)
       //   lien + lienTexte : page de démo externe (ex. 'Voir la démo')
       projets: [
         { titre: 'Macro SolidWorks', techno: 'VBA',
           texte: 'À partir d’un assemblage, génère le début de la mise en plan : vues d’ensemble, une feuille par sous-ensemble avec sa nomenclature, mise à l’échelle et couleurs automatiques.',
           video: 'images/code/macro-mise-en-plan.mp4', poster: 'images/code/macro-mise-en-plan.jpg',
-          source: 'MacroMiseEnPlan', statut: 'Vidéo accélérée · bouton « Source » pour le code VBA' }
+          source: 'MacroMiseEnPlan', statut: 'Vidéo accélérée · génération partielle d’une mise en plan' }
       ],
       competences: ['Python', 'JavaScript', 'Bases de données', 'API'],
 
