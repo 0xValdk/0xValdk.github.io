@@ -73,7 +73,7 @@ window.PROFIL = {
     // Code & IA : projets récents, compétences, puis les anciens programmes (fenêtres rétro)
     code: {
       titre: 'Code & IA',
-      sousTitre: 'Si une tâche se répète, je la confie à l’ordinateur. Et pour y arriver, je touche à tout.',
+      sousTitre: 'J’ai toujours aimé les ordinateurs, et ils me le rendent bien.',
 
       // « Aujourd'hui » : un bloc par projet.
       //   video + poster : vidéo de démonstration (images/code/), ouverte dans une fenêtre
@@ -91,7 +91,7 @@ window.PROFIL = {
       archivesTitre: 'Archives · pre-AI fun projects',
       programmes: [
         { app: 'snake',  fichier: 'PySnake.py',  description: 'un Snake, ses skins et son top 10' },
-        { app: 'fract',  fichier: 'PyFract.py',  description: 'Mandelbrot et Julia' }
+        { app: 'fract',  fichier: 'PyFract.py',  description: 'Les fractales Mandelbrot et Julia' }
       ]
     }
   },
