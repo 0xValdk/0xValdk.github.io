@@ -16,7 +16,7 @@ window.PROFIL = {
   /* ---------------- Accueil ---------------- */
 
   // Une phrase sous votre nom
-  accroche: 'J’interviens sur les sites de production, de l’automobile à l’aéronautique, partout en Europe.',
+  accroche: 'Méthodes et industrialisation : de la conception à la ligne de production, avec ceux qui y travaillent.',
 
   // Photo de profil (version recadrée et allégée de medias/pf.jpg)
   photo: 'images/profil.jpg',
@@ -61,7 +61,7 @@ window.PROFIL = {
     // Charpente : une photo de chantier, des cotes (ce qui se mesure) et les habilitations
     charpente: {
       titre: 'Charpente',
-      sousTitre: 'Formé en 2024 – 2025, pratiquée sur chantier.',
+      sousTitre: 'Formé en 2025, pratiquée sur chantier.',
       fond: 'images/projets/charpente.jpg',
       cotes: [
         { valeur: '10+', label: 'chantiers de surélévation' },
@@ -70,16 +70,28 @@ window.PROFIL = {
       habilitations: ['CACES R482', 'SST', 'AIPR', 'Travail en hauteur', 'Échafaudage de pied']
     },
 
-    // Code & IA : un terminal ; chaque programme s'ouvre dans une fenêtre rétro
+    // Code & IA : projets récents, compétences, puis les anciens programmes (fenêtres rétro)
     code: {
       titre: 'Code & IA',
-      sousTitre: 'Pre-AI fun projects',
+      sousTitre: 'Si une tâche se répète, je la confie à l’ordinateur. Et pour y arriver, je touche à tout.',
+
+      // « Aujourd'hui » : un bloc par projet.
+      //   video + poster : vidéo de démonstration (images/code/), ouverte dans une fenêtre
+      //   source : nom du code dans app/retro/sources-vba.js (bouton « Source »)
+      //   lien + lienTexte : page de démo externe (ex. 'Voir la démo')
+      projets: [
+        { titre: 'Macro SolidWorks', techno: 'VBA',
+          texte: 'À partir d’un assemblage, génère le début de la mise en plan : vues d’ensemble, une feuille par sous-ensemble avec sa nomenclature, mise à l’échelle et couleurs automatiques.',
+          video: 'images/code/macro-mise-en-plan.mp4', poster: 'images/code/macro-mise-en-plan.jpg',
+          source: 'MacroMiseEnPlan', statut: 'Vidéo accélérée · bouton « Source » pour le code VBA' }
+      ],
+      competences: ['Python', 'JavaScript', 'Bases de données', 'API'],
+
+      archivesTitre: 'Archives · pre-AI fun projects',
       programmes: [
         { app: 'snake',  fichier: 'PySnake.py',  description: 'un Snake, ses skins et son top 10' },
-        { app: 'shader', fichier: 'PyShader.py', description: 'le nuancier des couleurs Tk' },
         { app: 'fract',  fichier: 'PyFract.py',  description: 'Mandelbrot et Julia' }
-      ],
-      aujourdhui: 'Aujourd’hui : JavaScript, agents IA, automatisation.'
+      ]
     }
   },
 
@@ -123,13 +135,6 @@ window.PROFIL = {
               Nouveau paragraphe : \n\n */
   productions: [
     {
-      titre: 'Mezzanine pour les ateliers couvreurs',
-      contexte: 'Innovista · Toulouse · 2024 – 2025',
-      texte: 'Chef de projet d’un ouvrage en charpente traditionnelle : cahier des charges, planification des travaux et répartition des équipes, modélisation 3D, calcul des charges, taille des bois, levage et pose.',
-      lien: 'documents/mezzanine-couvreurs.pdf', lienTexte: 'Dossier technique (PDF)',
-      resume: 'La mezzanine, destinée à augmenter la surface des ateliers des apprentis couvreurs, a été conçue et réalisée selon un cahier des charges précis, prenant en compte les contraintes de l’existant, les attentes du client. L’objectif principal était d’obtenir une structure à la fois robuste et fonctionnelle. En tant que chef de projet, cette expérience m’a permis de mobiliser les compétences techniques et humaines acquises au cours de ma formation.'
-    },
-    {
       titre: 'Protection cathodique par courant imposé',
       contexte: 'Dalhousie University · Halifax, Canada · 2018',
       texte: 'Stage de recherche : revue bibliographique, élaboration du protocole expérimental, préparation des revêtements d’anode et mesures de résistivité pour évaluer l’efficacité de la protection cathodique et analyser les résultats.',
@@ -149,6 +154,13 @@ window.PROFIL = {
       texte: 'Étude d’avant-projet : enveloppe budgétaire, planning, analyse des risques et cahiers des charges pour réimplanter une activité d’essais hydrauliques.',
       note: 'Rapport confidentiel',
       resume: 'Dans le cadre du transfert de l’activité Skydrol d’EQUIP’AERO SERVICES, une étude d’avant-projet a été menée afin d’évaluer la faisabilité de la réimplantation des moyens d’essais dans de nouveaux locaux. L’objectif était d’améliorer l’ergonomie, la sécurité et la performance de l’atelier, tout en centralisant les moyens d’essais et en réduisant les déplacements des équipes. Cette étude a porté sur la définition des besoins, l’élaboration des cahiers des charges, l’estimation budgétaire, la planification prévisionnelle et l’identification des risques, afin de fournir aux décisionnaires les éléments nécessaires à la prise de décision.'
+    },
+    {
+      titre: 'Mezzanine pour les ateliers couvreurs',
+      contexte: 'Innovista · Toulouse · 2025',
+      texte: 'Chef de projet d’un ouvrage en charpente traditionnelle : cahier des charges, planification des travaux et répartition des équipes, modélisation 3D, calcul des charges, taille des bois, levage et pose.',
+      lien: 'documents/mezzanine-couvreurs.pdf', lienTexte: 'Dossier technique (PDF)',
+      resume: 'La mezzanine, destinée à augmenter la surface des ateliers des apprentis couvreurs, a été conçue et réalisée selon un cahier des charges précis, prenant en compte les contraintes de l’existant, les attentes du client. L’objectif principal était d’obtenir une structure à la fois robuste et fonctionnelle. En tant que chef de projet, cette expérience m’a permis de mobiliser les compétences techniques et humaines acquises au cours de ma formation.'
     }
   ],
 
@@ -157,7 +169,7 @@ window.PROFIL = {
   productionsFigure: {
     image: 'images/projets/drone.jpg',
     titre: 'Drone quadrirotor · 2015',
-    legende: 'Conçu et fabriqué sur mon temps libre.\nAltimètre : N/A\nGyroscope : N/A\nGPS : N/A\nCaméra : Optionnelle\nFormation du pilote : 0h\nEssais en vol : 6 réussis\nCrash : vol n°7\nStatut : bon pour destruction'
+    legende: 'Conçu et fabriqué sur mon temps libre.\nAltimètre : N/A\nGyroscope : N/A\nGPS : N/A\nCaméra : Optionnelle\nEssais en vol : 6 réussis\nCrash : vol n°7\nStatut : bon pour destruction'
   },
 
   /* ---------------- 04 · Ailleurs ----------------
@@ -166,7 +178,7 @@ window.PROFIL = {
      apparaissent ; sur téléphone, seul le fond est affiché, en bandeau.
      resume : texte déroulé au clic sur le pays (vide = rien ne se déroule).
               Nouveau paragraphe : \n\n */
-  ailleursIntro: 'Trois stages à l’étranger, une année au Japon et quelques voyages : apprendre à travailler et à vivre dans une autre culture.',
+  ailleursIntro: 'Trois stages à l’étranger et une année au Japon : apprendre à travailler et à vivre dans une autre culture.',
   voyages: [
     { pays: 'Angleterre', periode: '2015', texte: 'Stage chez Zodiac Interconnect, Slough.',
       fond: 'images/voyages/england-bridge.jpg', photo: 'images/voyages/england-guard.jpg',
@@ -176,16 +188,10 @@ window.PROFIL = {
       resume: 'Mon premier voyage hors du continent européen : le grand saut, seul. Il a fallu trouver mes repères dans une nouvelle ville, me débrouiller dans une autre langue et apprivoiser un quotidien dont les codes m’étaient étrangers. Entre la découverte du Brésil, les rencontres en tout genre et l’exploration d’une autre culture, cette expérience m’a appris à sortir de mes habitudes et à me sentir à l’aise dans l’inconnu. J’en suis revenu plus autonome, plus confiant et animé d’une curiosité grandissante pour les autres, leurs façons de penser et les différentes manières d’appréhender le monde.' },
     { pays: 'Canada', periode: '2018', texte: 'Stage de recherche à Dalhousie University, Halifax.',
       fond: 'images/voyages/canada-plage.jpg', photo: 'images/voyages/canada-baie.jpg',
-      resume: 'Six mois qui ont marqué l’aboutissement de mes études, mais surtout une forme de consécration personnelle. J’y ai découvert un monde sans frontières à mes yeux, où je pouvais trouver ma place bien au-delà de la France. Entre la sérénité des paysages, la douceur du quotidien et les longues conversations avec des personnes venues des quatre coins du monde, j’ai découvert la richesse des liens qui se tissent lorsqu’on prend le temps de se connaître. Certaines de ces amitiés m’ont profondément marqué, m’apprenant à écouter, à partager et à m’ouvrir davantage aux autres. Je suis reparti avec la conviction que le monde m’était accessible, et que je pouvais déployer mes ailes bien plus loin que je ne l’avais imaginé.' },
+      resume: 'Six mois qui ont conclu mes études, avec la certitude de pouvoir trouver ma place bien au-delà de la France. J’en garde des amitiés venues des quatre coins du monde, qui m’ont appris à écouter et à partager.' },
     { pays: 'Japon', periode: '2018 – 2019', texte: 'Un an de vie et de travail.',
       fond: 'images/voyages/japon-cote.jpg', photo: 'images/voyages/japon-auto-stop.jpg',
-      resume: 'Presque un an au Japon, initialement parti pour suivre quelqu’un, finalement resté pour moi-même. Ce qui devait être un séjour à deux s’est transformé en une aventure faite de détours, de rencontres et de changements de cap. Serveur dans une station de ski à Niseko, ouvrier dans une ferme de coquilles Saint-Jacques, employé dans une auberge de jeunesse à Kyoto… J’ai traversé le pays au gré des opportunités, parfois à vélo, sans toujours savoir quelle serait la prochaine étape. Entre deux emplois, j’ai aussi pris le temps d’explorer la Thaïlande, puis de découvrir le Japon au fil des régions et des rencontres. Je suis venu avec une idée en tête, mais c’est tout ce que je n’avais pas prévu qui a fait la richesse de ce voyage.' },
-    { pays: 'Thaïlande', periode: '2019', texte: 'Voyage.',
-      fond: 'images/voyages/thailand-island.jpg', photo: 'images/voyages/thailand-white-statue.jpg',
-      resume: 'Une exploration du pays entre amis venus des quatre coins du monde.' },
-    { pays: 'Grèce', periode: '2020', texte: 'Voyage.',
-      fond: 'images/voyages/grece-paint.jpg', photo: 'images/voyages/grece-thinker.jpg',
-      resume: 'Un voyage improvisé, sans itinéraire ni contraintes, au gré du vent.' }
+      resume: 'Presque un an de petits boulots : serveur dans une station de ski à Niseko, ouvrier dans une ferme de coquilles Saint-Jacques, employé dans une auberge de jeunesse à Kyoto. J’ai traversé le pays au gré des opportunités, parfois à vélo, en apprenant à m’adapter à tout ce que je n’avais pas prévu.' }
   ],
 
   /* ---------------- 05 · Contact ---------------- */
@@ -197,7 +203,7 @@ window.PROFIL = {
   localisation: '',        // ex. 'Toulouse · mobile en France et en Europe'
 
   // Titre de la section contact
-  contactTitre: 'Un poste, une mission ?\nParlons-en.',
+  contactTitre: 'Un poste ?\nParlons-en.',
 
   // Bouton « Demander mon CV » : ouvre un e-mail prérempli (objet et message ci-dessous)
   cvSurDemande: true,

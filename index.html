@@ -45,7 +45,7 @@
             <a class="btn-2" href="#/contact" id="cta-contact">Me contacter</a>
           </div>
           <dl class="stats">
-            <div><dt>Sites</dt><dd id="st-sites">0</dd></div>
+            <div><dt>Sites cartographiés</dt><dd id="st-sites">0</dd></div>
             <div><dt>Pays</dt><dd id="st-countries">0</dd></div>
             <div><dt>Secteurs</dt><dd id="st-sectors">0</dd></div>
           </dl>
@@ -104,9 +104,16 @@
             <h2 class="q-title" id="qd-title"></h2>
             <p class="q-sub" id="qd-sub"></p>
           </div>
-          <div class="term">
-            <div class="term-bar mono" aria-hidden="true"><i></i><i></i><i></i><span>valentin@atlas : ~/fun-projects</span></div>
-            <div class="term-body mono" id="qd-term"></div>
+          <div class="q-now" id="qd-now">
+            <div class="q-now-head">
+              <p class="q-k mono">Aujourd’hui<span class="caret" aria-hidden="true"></span></p>
+              <ul class="q-skills mono" id="qd-skills" aria-label="Langages et outils"></ul>
+            </div>
+            <div class="q-projs" id="qd-projs"></div>
+          </div>
+          <div class="q-arch" id="qd-arch">
+            <p class="q-k mono" id="qd-arch-k"></p>
+            <div class="q-arch-list mono" id="qd-progs"></div>
           </div>
         </article>
       </div>
@@ -193,6 +200,7 @@
 <script src="mon-profil.js"></script>
 <script src="app/retro/tk-colors.js"></script>
 <script src="app/retro/sources.js"></script>
+<script src="app/retro/sources-vba.js"></script>
 <script src="app/retro/retro.js"></script>
 <script src="app/profil.js"></script>
 </body>

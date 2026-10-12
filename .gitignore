@@ -1,2 +1,9 @@
 # Dossier de travail privé (CV, lettres, originaux) : ne jamais publier
 medias/
+
+# Macro SolidWorks : originaux (vidéo brute, macro de travail). Le site utilise
+# images/code/ (vidéo allégée) et app/retro/sources-vba.js (code caviardé).
+macro-mise-en-plan/
+
+# Consignes de travail (non publiées)
+PORTFOLIO_retouches_bnovate.md

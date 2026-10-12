@@ -149,57 +149,51 @@
   $('qc-habs').hidden = !habs.length;
   $('q-charp').hidden = !(QC.titre || cotes.length);
 
-  // Code & IA : terminal tapé à la première visite ; chaque programme ouvre sa fenêtre rétro
+  // Code & IA : projets récents (vidéo + source dans une fenêtre rétro), compétences, puis archives
   setText('qd-title', QD.titre); setText('qd-sub', QD.sousTitre);
-  var progs = list(QD.programmes).filter(function (g) { return g.fichier; });
-  var term = $('qd-term'), typed = false;
-  var termLines = [{ cmd: 'ls' }, { out: progs.map(function (g) { return g.fichier; }).join('   ') }, { cmd: 'python  # cliquer un programme pour le lancer' }]
-    .concat(progs.map(function (g) { return { prog: g }; }))
-    .concat(QD.aujourdhui ? [{ out: '# ' + QD.aujourdhui, cls: 'cm' }] : [])
-    .concat([{ prompt: true }]);
-  var PROMPT = '<span class="p">~/fun-projects $</span> ';
-  function termLine(l) {
-    var el;
-    if (l.prog) {
-      el = document.createElement('button');
-      el.type = 'button'; el.className = 'term-run';
-      el.innerHTML = '<span class="go-ico" aria-hidden="true">▶</span><span class="f">' + esc(l.prog.fichier) + '</span><span class="d">' + esc(l.prog.description || '') + '</span>';
-      el.setAttribute('aria-label', 'Lancer ' + l.prog.fichier + (l.prog.description ? ' : ' + l.prog.description : ''));
-      el.addEventListener('click', function () { if (window.Retro) window.Retro.open(l.prog.app); });
-    } else {
-      el = document.createElement('span');
-      el.className = 'ln' + (l.cls ? ' ' + l.cls : '');
-      el.innerHTML = l.cmd != null ? PROMPT + esc(l.cmd) : l.prompt ? PROMPT + '<span class="caret"></span>' : esc(l.out);
-    }
-    return el;
-  }
-  function typeTerm() {
-    if (typed) return; typed = true;
-    if (reduceMotion) { termLines.forEach(function (l) { term.appendChild(termLine(l)); }); return; }
-    var k = 0;
-    (function next() {
-      if (k >= termLines.length) return;
-      var l = termLines[k++], el = termLine(l);
-      term.appendChild(el);
-      if (l.cmd == null) { setTimeout(next, l.prog ? 140 : 260); return; }
-      // commande tapée lettre par lettre
-      var txt = l.cmd, n = 0;
-      el.innerHTML = PROMPT + '<span class="caret"></span>';
-      (function tick() {
-        el.innerHTML = PROMPT + esc(txt.slice(0, n)) + '<span class="caret"></span>';
-        if (n++ < txt.length) setTimeout(tick, txt.charAt(n - 1) === ' ' ? 60 : 32);
-        else { el.innerHTML = PROMPT + esc(txt); setTimeout(next, 320); }
-      })();
-    })();
-  }
-  $('q-code').hidden = !(QD.titre || progs.length);
-
-  document.addEventListener('page:show', function (e) {
-    var here = e.detail === 'a-propos';
-    mPlay(here);
-    if (here) setTimeout(typeTerm, reduceMotion ? 0 : 700);
+  function retro(fn) { return function () { if (window.Retro) fn(window.Retro); }; }
+  var projs = list(QD.projets).filter(function (p) { return p.titre; });
+  projs.forEach(function (p) {
+    var fen = Object.assign({}, p, { titre: p.titre + (p.techno ? ' (' + p.techno + ')' : '') });
+    var el = document.createElement('article');
+    el.className = 'q-proj';
+    el.innerHTML =
+      (p.poster && p.video ? '<button type="button" class="q-proj-img"><img src="' + esc(p.poster) + '" alt="" loading="lazy"><span class="go" aria-hidden="true">▶</span></button>' : '') +
+      '<div class="q-proj-txt"><h3 class="q-proj-t">' + esc(p.titre) + (p.techno ? ' <span class="mono">' + esc(p.techno) + '</span>' : '') + '</h3>' +
+      (p.texte ? '<p class="q-proj-d">' + esc(p.texte) + '</p>' : '') +
+      '<div class="q-proj-act">' +
+      (p.video ? '<button type="button" class="q-btn mono" data-act="video"><span aria-hidden="true">▶</span> Vidéo</button>' : '') +
+      (p.source ? '<button type="button" class="q-btn mono" data-act="src">Source</button>' : '') +
+      (p.lien ? '<a class="q-btn mono" href="' + esc(p.lien) + '" target="_blank" rel="noopener">' + esc(p.lienTexte || 'Voir la démo') + ' ↗</a>' : '') +
+      '</div></div>';
+    var img = el.querySelector('.q-proj-img');
+    if (img) { img.setAttribute('aria-label', 'Voir la vidéo : ' + p.titre); img.addEventListener('click', retro(function (R) { R.projet(fen, false); })); }
+    el.querySelectorAll('[data-act]').forEach(function (b) {
+      b.addEventListener('click', retro(function (R) { R.projet(fen, b.getAttribute('data-act') === 'src'); }));
+    });
+    $('qd-projs').appendChild(el);
   });
-  $('a-propos').hidden = !(frise.length || mPhotos.length || cotes.length || progs.length);
+  var skills = (QD.competences || []).map(function (x) { return String(x).trim(); }).filter(Boolean);
+  $('qd-skills').innerHTML = skills.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('');
+  $('qd-skills').hidden = !skills.length;
+  $('qd-now').hidden = !(projs.length || skills.length);
+
+  var progs = list(QD.programmes).filter(function (g) { return g.fichier; });
+  setText('qd-arch-k', QD.archivesTitre);
+  progs.forEach(function (g) {
+    var el = document.createElement('button');
+    el.type = 'button'; el.className = 'q-run';
+    el.innerHTML = '<span class="go" aria-hidden="true">▶</span><span class="f">' + esc(g.fichier) + '</span><span class="d">' + esc(g.description || '') + '</span>';
+    el.setAttribute('aria-label', 'Lancer ' + g.fichier + (g.description ? ' : ' + g.description : ''));
+    if (g.description) el.title = g.description;
+    el.addEventListener('click', retro(function (R) { R.open(g.app); }));
+    $('qd-progs').appendChild(el);
+  });
+  $('qd-arch').hidden = !progs.length;
+  $('q-code').hidden = !(QD.titre || projs.length || progs.length);
+
+  document.addEventListener('page:show', function (e) { mPlay(e.detail === 'a-propos'); });
+  $('a-propos').hidden = !(frise.length || mPhotos.length || cotes.length || projs.length || progs.length);
 
   // ---------- 02 · Karakuri Kaizen ----------
   setText('kk-title', KK.titre);

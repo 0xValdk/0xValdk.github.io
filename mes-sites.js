@@ -6,7 +6,7 @@
 /* ---- Réglages généraux ---- */
 window.ATLAS_CONFIG = {
   nom: 'Valentin Thiers',
-  fonction: 'Ingénieur industrialisation',
+  fonction: 'Ingénieur méthodes & industrialisation',
   // Phrase affichée sous le titre de l'atlas
   presentation: 'Chaque point est une usine où je me suis rendu en personne pour intervenir : installation, mise en service, maintenance, support ou formation sur site.',
   theme: 'clair',          // 'clair' ou 'nuit'
@@ -431,7 +431,7 @@ window.SITES = [
     gmaps: 'https://maps.app.goo.gl/zgzomHw6mTpMqv1R7',
     start: '', end: '',
     role: 'Installation',
-    description: 'Installation de postes de travail modulaires, équipés d’un plateau rotatif et d’un plateau élévateur.',
+    description: 'Confidentiel.',
     notes: '',
     extras: []
   },

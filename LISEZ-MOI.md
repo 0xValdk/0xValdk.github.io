@@ -60,8 +60,10 @@ Le titre de l'onglet et le résumé affiché quand on partage le lien (LinkedIn,
 ## Page « À propos » et programmes rétro
 
 La page « À propos » est découpée en quatre quadrants (Ingénieur, Montagne, Charpente, Code & IA), réglés dans `mon-profil.js` → `apropos`.
-Le terminal du quadrant Code & IA lance trois anciens programmes Python (`medias/dev`) dans des fenêtres façon Windows 98 : ce sont des **portages JavaScript fidèles** (`app/retro/retro.js`), car un navigateur ne sait pas exécuter Tkinter. Le bouton « Source » de chaque fenêtre affiche le code Python d'origine.
-Ce code est recopié dans `app/retro/sources.js` : si vous modifiez un des fichiers `.py`, recopiez-le (ou demandez une régénération). Scores, options et fractales sauvegardées restent dans le navigateur du visiteur.
+Le quadrant Code & IA (`apropos.code`) présente :
+- **les projets récents** (`projets`) : la macro SolidWorks s'ouvre dans une fenêtre façon Windows 98 avec sa vidéo (`images/code/`) et un bouton « Source » qui affiche le code VBA. Ce code est la **version publique caviardée** `macro-mise-en-plan/macro-publique.bas`, recopiée dans `app/retro/sources-vba.js` : si vous la modifiez, recopiez-la (ou demandez une régénération). Le dossier `macro-mise-en-plan/` (vidéo brute, macro de travail) est privé, exclu par `.gitignore`. Un projet peut aussi avoir un `lien` vers une page de démo ;
+- **les compétences** (`competences`), sur la ligne « Aujourd'hui » ;
+- **les archives** (`programmes`) : d'anciens programmes Python (`medias/dev`) relancés dans des fenêtres rétro. Ce sont des **portages JavaScript fidèles** (`app/retro/retro.js`), car un navigateur ne sait pas exécuter Tkinter ; leur bouton « Source » affiche le code Python d'origine, recopié dans `app/retro/sources.js`. Scores, options et fractales sauvegardées restent dans le navigateur du visiteur.
 
 ## Mettre en ligne (portfolio)
 
