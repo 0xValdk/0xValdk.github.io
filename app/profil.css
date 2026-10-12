@@ -209,7 +209,7 @@ h1 { margin: -6px 0 0; font-size: clamp(48px, 7vw, 96px); line-height: .95; font
 .q-btn { display: inline-flex; align-items: center; gap: 7px; height: 28px; padding: 0 12px; border: 1px solid #3A4A59; border-radius: 3px; background: none; color: #E6EDF3; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: background-color .15s, border-color .15s; }
 .q-btn span { font-size: 9px; color: #F08A5D; }
 .q-btn:hover, .q-btn:focus-visible { border-color: #F08A5D; background: rgba(240,138,93,.10); outline: none; }
-.q-proj-img { grid-area: img; position: relative; width: clamp(240px, 16vw, 300px); aspect-ratio: 16 / 9; padding: 0; border: 1px solid #2A3743; border-radius: 4px; overflow: hidden; background: #000; cursor: pointer; }
+.q-proj-img { grid-area: img; position: relative; width: clamp(200px, 14vw, 260px); aspect-ratio: 16 / 9; padding: 0; border: 1px solid #2A3743; border-radius: 4px; overflow: hidden; background: #000; cursor: pointer; }
 .q-proj-img img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 60% 30%; opacity: .8; transition: opacity .2s; }
 .q-proj-img .go { position: absolute; inset: 0; width: 34px; height: 34px; margin: auto; display: grid; place-items: center; border-radius: 50%; font-size: 11px; color: #F08A5D; background: rgba(14,21,28,.8); transition: background-color .2s, color .2s; }
 .q-proj-img:hover img, .q-proj-img:focus-visible img { opacity: 1; }
