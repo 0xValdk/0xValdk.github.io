@@ -73,7 +73,7 @@ window.PROFIL = {
     // Code & IA : projets récents, compétences, puis les anciens programmes (fenêtres rétro)
     code: {
       titre: 'Code & IA',
-      sousTitre: 'J’ai toujours aimé les ordinateurs, et ils me le rendent bien.',
+      sousTitre: 'J’ai toujours aimé les ordinateurs. Aujourd’hui, ils me le rendent bien.',
 
       // « Aujourd'hui » : un bloc par projet.
       //   video + poster : vidéo de démonstration (images/code/), ouverte dans une fenêtre
