@@ -50,7 +50,7 @@ window.PROFIL = {
     montagne: {
       titre: 'Montagne',
       sousTitre: 'Escalade · Snowboard',
-      photos: ['images/a-propos/poudreuse.jpg', 'images/a-propos/saut.jpg', 'images/voyages/bresil-escalade.jpg'],
+      photos: ['images/a-propos/poudreuse.jpg', 'images/a-propos/saut.jpg', 'images/a-propos/escalade.jpg'],
       // petites fiches posées sur la photo (une par sport)
       fiches: [
         { sport: 'Escalade', niveau: '6b+ en tête · 6c en bloc', phrase: 'Pas d’bras, pas d’6a. Pas d’pieds, pas d’6b !' },
@@ -185,7 +185,7 @@ window.PROFIL = {
       fond: 'images/voyages/england-bridge.jpg', photo: 'images/voyages/england-guard.jpg',
       resume: 'Mon premier voyage à l’étranger, à 20 ans. Pendant trois mois, j’ai vécu dans une ville pavillonnaire entre Londres et Windsor. J’étais parti avec un objectif en tête : apprendre l’anglais pour pouvoir, un jour, aller plus loin, partir plus longtemps et découvrir le monde par moi-même.' },
     { pays: 'Brésil', periode: '2016', texte: 'Stage de recherche à l’Institut de Physique de São Carlos.',
-      fond: 'images/voyages/bresil-forest.jpg', photo: 'images/voyages/bresil-escalade.jpg',
+      fond: 'images/voyages/bresil-forest.jpg', photo: 'images/voyages/bresil-vertical.jpg',
       resume: 'Mon premier voyage hors d’Europe, seul : le grand saut. Entre nouvelle langue, nouveaux repères et découverte d’une autre culture, cette expérience m’a appris à sortir de mes habitudes et à me sentir à l’aise dans l’inconnu. J’en suis revenu plus autonome, plus confiant et curieux des autres et de leur vision du monde.' },
     { pays: 'Canada', periode: '2018', texte: 'Stage de recherche à Dalhousie University, Halifax.',
       fond: 'images/voyages/canada-plage.jpg', photo: 'images/voyages/canada-baie.jpg',
