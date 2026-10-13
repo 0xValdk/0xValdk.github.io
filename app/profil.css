@@ -309,6 +309,8 @@ h1 { margin: -6px 0 0; font-size: clamp(48px, 7vw, 96px); line-height: .95; font
 .resume p { margin: 0; padding: 10px 0 0 14px; border-left: 2px solid color-mix(in srgb, var(--accent) 45%, transparent); font-size: 14.5px; line-height: 1.65; color: var(--ink); text-wrap: pretty; }
 .resume p + p { padding-top: 8px; }
 .resume p:last-child { padding-bottom: 4px; }
+/* Productions : marges verticales resserrées, pour que la liste tienne sans scroll résiduel (ordinateur) */
+@media (min-width: 961px) { #productions .sec { padding-top: 56px; padding-bottom: 56px; } }
 /* figure en fond de colonne (Productions) : estompée au repos, en pleine opacité au clic */
 .pj-side { display: flex; flex-direction: column; min-height: 100%; }
 .pj-fig { margin: auto 0; position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 14px; width: calc(100% + 32px); padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: zoom-in; }
