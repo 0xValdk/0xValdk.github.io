@@ -452,15 +452,19 @@
   // courte pause, puis un nouveau geste d'environ deux crans, suivi par le repère #edge.
   var GESTE_PAUSE = 220, SEUIL = 150;
   var acc = 0, lastWheel = 0, gestureUsed = false, edgeT = 0;
-  function showEdge(dir, f) {
+  // touch : version téléphone, qui rappelle le glissement horizontal (sans jauge)
+  function showEdge(dir, f, touch) {
     var n = cur + dir;
     if (n < 0 || n >= pages.length) return hideEdge();
     edge.dataset.dir = dir > 0 ? 'next' : 'prev';
-    $('edge-t').textContent = (dir > 0 ? '↓ Page suivante · ' : '↑ Page précédente · ') + names[n];
+    edge.classList.toggle('touch', !!touch);
+    $('edge-t').textContent = touch
+      ? (dir > 0 ? '← Glissez vers la gauche pour la page suivante : ' : '→ Glissez vers la droite pour la page précédente : ') + names[n]
+      : (dir > 0 ? '↓ Page suivante · ' : '↑ Page précédente · ') + names[n];
     edge.style.setProperty('--f', f);
     edge.classList.add('on');
     clearTimeout(edgeT);
-    edgeT = setTimeout(hideEdge, 1200);
+    edgeT = setTimeout(hideEdge, touch ? 2200 : 1200);
   }
   function hideEdge() { clearTimeout(edgeT); edge.classList.remove('on'); }
   stage.addEventListener('wheel', function (e) {
@@ -503,7 +507,16 @@
 
   // tactile : glissement horizontal franc
   var t0 = null;
-  stage.addEventListener('touchstart', function (e) { t0 = { x: e.touches[0].clientX, y: e.touches[0].clientY }; }, { passive: true });
+  stage.addEventListener('touchstart', function (e) { t0 = { x: e.touches[0].clientX, y: e.touches[0].clientY, ly: e.touches[0].clientY, over: 0 }; }, { passive: true });
+  // le doigt continue de tirer au-delà du bas (ou du haut) de la page : on rappelle le glissement
+  stage.addEventListener('touchmove', function (e) {
+    if (!t0 || !pages.length) return;
+    var y = e.touches[0].clientY, step = t0.ly - y, pg = pages[cur];   // step > 0 : vers le bas de la page
+    t0.ly = y;
+    var atEnd = pg.scrollTop + pg.clientHeight >= pg.scrollHeight - 2, atStart = pg.scrollTop <= 1;
+    if ((step > 0 && atEnd) || (step < 0 && atStart)) t0.over += step; else t0.over = 0;
+    if (Math.abs(t0.over) > 40 && Math.abs(e.touches[0].clientX - t0.x) < Math.abs(y - t0.y)) showEdge(t0.over > 0 ? 1 : -1, 0, true);
+  }, { passive: true });
   stage.addEventListener('touchend', function (e) {
     if (!t0) return;
     var dx = e.changedTouches[0].clientX - t0.x, dy = e.changedTouches[0].clientY - t0.y;
