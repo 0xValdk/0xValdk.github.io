@@ -459,7 +459,7 @@
     edge.dataset.dir = dir > 0 ? 'next' : 'prev';
     edge.classList.toggle('touch', !!touch);
     $('edge-t').textContent = touch
-      ? (dir > 0 ? '← Glissez vers la gauche pour la page suivante : ' : '→ Glissez vers la droite pour la page précédente : ') + names[n]
+      ? (dir > 0 ? '→ Glissez vers la gauche pour la page suivante : ' : '← Glissez vers la droite pour la page précédente : ') + names[n]
       : (dir > 0 ? '↓ Page suivante · ' : '↑ Page précédente · ') + names[n];
     edge.style.setProperty('--f', f);
     edge.classList.add('on');
