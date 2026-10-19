@@ -374,7 +374,7 @@
   // ---------- Pages ----------
   // Une page par section visible ; adresse de la forme #/karakuri (sans ancre réelle,
   // pour que le navigateur ne tente jamais de faire défiler la scène).
-  var stage = $('stage'), pages = [], cur = -1, lockUntil = 0;
+  var stage = $('stage'), edge = $('edge'), pages = [], cur = -1, lockUntil = 0;
   document.querySelectorAll('.page').forEach(function (pg) { if (!pg.hidden) pages.push(pg); });
   var names = pages.map(function (pg) { return pg.dataset.nav || 'Accueil'; });
 
@@ -416,6 +416,7 @@
     var pg = pages[n];
     pg.scrollTop = opts.fromBelow ? pg.scrollHeight : 0;
     stage.scrollLeft = 0;
+    hideEdge();
     cur = n;
     if (!first) lockUntil = Date.now() + 850;
     if (first) requestAnimationFrame(function () { pages.forEach(function (p) { p.classList.remove('instant'); }); });
@@ -446,25 +447,47 @@
   });
   window.addEventListener('hashchange', function () { go(indexOfHash(), { fromHash: true }); });
 
-  // molette : la page défile d'abord ; arrivée en bout, un cran de plus change de page
-  var acc = 0, accT = 0;
+  // molette : la page défile d'abord ; arrivée en bout, elle bute. Le geste qui a fait
+  // défiler (inertie du pavé tactile comprise) ne change jamais de page : il faut une
+  // courte pause, puis un nouveau geste d'environ deux crans, suivi par le repère #edge.
+  var GESTE_PAUSE = 220, SEUIL = 150;
+  var acc = 0, lastWheel = 0, gestureUsed = false, edgeT = 0;
+  function showEdge(dir, f) {
+    var n = cur + dir;
+    if (n < 0 || n >= pages.length) return hideEdge();
+    edge.dataset.dir = dir > 0 ? 'next' : 'prev';
+    $('edge-t').textContent = (dir > 0 ? '↓ Page suivante · ' : '↑ Page précédente · ') + names[n];
+    edge.style.setProperty('--f', f);
+    edge.classList.add('on');
+    clearTimeout(edgeT);
+    edgeT = setTimeout(hideEdge, 1200);
+  }
+  function hideEdge() { clearTimeout(edgeT); edge.classList.remove('on'); }
   stage.addEventListener('wheel', function (e) {
     if (e.ctrlKey || !pages.length) return;
     var d = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
     if (e.deltaMode === 1) d *= 16;
+    if (!d) return;
     var now = Date.now();
+    if (now - lastWheel > GESTE_PAUSE) gestureUsed = false;   // nouveau geste
+    if (now - lastWheel > 700) acc = 0;
+    lastWheel = now;
     if (now < lockUntil) {               // transition en cours ou inertie du pavé tactile
       e.preventDefault();
       lockUntil = Math.max(lockUntil, now + 160);
+      gestureUsed = true;
       return;
     }
     var pg = pages[cur];
     var atEnd = pg.scrollTop + pg.clientHeight >= pg.scrollHeight - 2, atStart = pg.scrollTop <= 1;
-    if ((d > 0 && !atEnd) || (d < 0 && !atStart)) { acc = 0; return; }   // défilement normal
+    if ((d > 0 && !atEnd) || (d < 0 && !atStart)) { acc = 0; gestureUsed = true; hideEdge(); return; }   // défilement normal
     e.preventDefault();
-    if (now - accT > 300) acc = 0;
-    accT = now; acc += d;
-    if (Math.abs(acc) >= 40) { acc = 0; go(cur + (d > 0 ? 1 : -1), { fromBelow: d < 0, focus: false }); }
+    var dir = d > 0 ? 1 : -1;
+    if (gestureUsed) { acc = 0; showEdge(dir, 0); return; }   // butée : ce geste a déjà servi
+    if (acc && (acc > 0) !== (d > 0)) acc = 0;                // changement de sens
+    acc += d;
+    if (Math.abs(acc) >= SEUIL) { acc = 0; gestureUsed = true; go(cur + dir, { fromBelow: d < 0, focus: false }); }
+    else showEdge(dir, Math.abs(acc) / SEUIL);
   }, { passive: false });
 
   // clavier : ← → et Page préc./suiv. en bout de page

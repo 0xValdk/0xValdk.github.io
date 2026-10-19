@@ -100,6 +100,12 @@ h1 { margin: -6px 0 0; font-size: clamp(48px, 7vw, 96px); line-height: .95; font
 .page.on { transform: none; opacity: 1; visibility: visible; transition: transform .8s cubic-bezier(.65,0,.25,1), opacity .8s ease, visibility 0s; }
 .page.instant, .page.instant.on { transition: none; }
 .page:focus { outline: none; }
+/* repère de bout de page (molette) */
+.edge { position: fixed; left: 50%; bottom: 22px; z-index: 15; display: flex; flex-direction: column; gap: 6px; padding: 8px 14px 9px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--ink); font-size: 13px; font-weight: 500; white-space: nowrap; box-shadow: 0 6px 20px rgb(0 0 0 / .14); opacity: 0; transform: translate(-50%, 8px); pointer-events: none; transition: opacity .2s, transform .2s; }
+.edge[data-dir="prev"] { bottom: auto; top: 84px; transform: translate(-50%, -8px); }
+.edge.on { opacity: 1; transform: translate(-50%, 0); }
+.edge-bar { height: 3px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.edge-bar::before { content: ''; display: block; height: 100%; background: var(--accent); transform-origin: left; transform: scaleX(var(--f, 0)); transition: transform .15s; }
 .page-in { position: relative; min-height: 100%; display: flex; flex-direction: column; justify-content: center; }
 .page-dark { background: #0E151C; }
 
