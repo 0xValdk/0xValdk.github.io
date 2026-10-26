@@ -34,9 +34,8 @@ window.PROFIL = {
         { annee: '2015', label: 'ICAM, en alternance chez Équip’Aéro' },
         { annee: '2018', label: 'Diplômé, puis un an au Japon' },
         { annee: '2020', label: 'AIO : conception, mise en service' },
-        { annee: '2022', label: 'DEISHII : déploiement, formation' },
-        { annee: '2023', label: 'Indépendant' },
-        { annee: '2025', label: 'Charpente' }
+        { annee: '2023', label: 'DEISHII, puis indépendant : déploiement, formation' },
+        { annee: '2025', label: 'Formation charpente' }
       ],
       cartouche: [
         ['Titre', 'Ingénieur généraliste'],
@@ -206,7 +205,9 @@ window.PROFIL = {
   // Titre de la section contact
   contactTitre: 'Un poste ?\nParlons-en.',
 
-  // Bouton « Demander mon CV » : ouvre un e-mail prérempli (objet et message ci-dessous)
+  // Bouton CV : avec `cv`, ouvre le PDF (dossier documents/) ;
+  // sinon « Demander mon CV » ouvre un e-mail prérempli (objet et message ci-dessous)
+  cv: 'documents/CV_THIERS_VALENTIN.pdf',
   cvSurDemande: true,
   cvObjet: 'Demande de CV',
   cvMessage: 'Bonjour Valentin,\n\nPourriez-vous m’envoyer votre CV ?\n\nCordialement,'
