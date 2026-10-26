@@ -357,14 +357,16 @@
   }
   if (P.telephone) links.push('<a href="tel:' + esc(P.telephone.replace(/[^\d+]/g, '')) + '">' + ICONS.tel + esc(P.telephone) + '</a>');
   if (P.localisation) links.push('<span>' + ICONS.pin + esc(P.localisation) + '</span>');
-  // CV sur demande : un clic ouvre un e-mail prérempli ; sans adresse, simple mention
-  if (P.cvSurDemande && P.email) {
+  // CV : le PDF s'il est fourni ; sinon un clic ouvre un e-mail prérempli ; sans adresse, simple mention
+  if (P.cv) {
+    links.push('<a class="c-cv" href="' + esc(P.cv) + '" target="_blank" rel="noopener">' + ICONS.cv + 'Mon CV (PDF)</a>');
+  } else if (P.cvSurDemande && P.email) {
     var cvHref = 'mailto:' + P.email + '?subject=' + encodeURIComponent(P.cvObjet || 'Demande de CV') +
       (P.cvMessage ? '&body=' + encodeURIComponent(P.cvMessage) : '');
     links.push('<a class="c-cv" href="' + esc(cvHref) + '">' + ICONS.cv + 'Demander mon CV</a>');
   }
   $('c-links').innerHTML = links.join('');
-  $('c-note').textContent = P.cvSurDemande && !P.email ? 'CV disponible sur demande' : '';
+  $('c-note').textContent = !P.cv && P.cvSurDemande && !P.email ? 'CV disponible sur demande' : '';
   var hasContact = P.email || P.linkedin || P.telephone;
   $('contact').hidden = !hasContact;
   $('cta-contact').hidden = !hasContact;
