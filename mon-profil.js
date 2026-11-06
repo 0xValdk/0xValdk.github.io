@@ -205,9 +205,7 @@ window.PROFIL = {
   // Titre de la section contact
   contactTitre: 'Un poste ?\nParlons-en.',
 
-  // Bouton CV : avec `cv`, ouvre le PDF (dossier documents/) ;
-  // sinon « Demander mon CV » ouvre un e-mail prérempli (objet et message ci-dessous)
-  cv: 'documents/CV_THIERS_VALENTIN.pdf',
+  // Bouton « Demander mon CV » : ouvre un e-mail prérempli (objet et message ci-dessous)
   cvSurDemande: true,
   cvObjet: 'Demande de CV',
   cvMessage: 'Bonjour Valentin,\n\nPourriez-vous m’envoyer votre CV ?\n\nCordialement,'
